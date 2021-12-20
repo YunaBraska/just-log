@@ -1,8 +1,8 @@
 package berlin.yuna.justlog;
 
 import berlin.yuna.justlog.formatter.SimpleLogFormatter;
-import berlin.yuna.justlog.formatter.SimpleLogFormatterOld;
 import berlin.yuna.justlog.logger.DefaultLogger;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.concurrent.ForkJoinPool;
 import java.util.logging.Logger;
 
+@Disabled
 class PerformanceTest {
 
     public static int LOG_ITEMS = 1000000;
@@ -30,7 +31,6 @@ class PerformanceTest {
         logBuffer();
         logPrintWriter();
         justLogNew();
-        justLogOld();
         logSystem();
         logJava();
         slf4j();
@@ -45,8 +45,6 @@ class PerformanceTest {
         executor.submit(PerformanceTest::logBuffer);
         executor.submit(PerformanceTest::logPrintWriter);
         executor.submit(PerformanceTest::logPrintWriter);
-        executor.submit(PerformanceTest::justLogOld);
-        executor.submit(PerformanceTest::justLogOld);
         executor.submit(PerformanceTest::justLogNew);
         executor.submit(PerformanceTest::justLogNew);
         executor.submit(PerformanceTest::logSystem);
@@ -114,25 +112,6 @@ class PerformanceTest {
             logger.info(LOG_MESSAGE1);
         }
         RESULT.put("Slf4j", System.currentTimeMillis() - start);
-    }
-
-    private static void justLogOld() {
-        final berlin.yuna.justlog.logger.Logger logger = DefaultLogger.instance();
-//        logger.formatter(new SimpleLogFormatter().logger(logger).pattern("[%p{l=10}] [%l{l=5}] [%d{p=HH:mm:ss.SSS}] [%c{l=10}] [%T{l=10,i=0}:%M:%L] %m%n%e{p=berlin,yuna}"));
-//        logger.formatter(new SimpleLogFormatterOld().config(logger, new HashMap<>()).pattern("%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %l %m%n"));
-        logger.formatter(new SimpleLogFormatterOld().pattern(null));
-        final long start = System.currentTimeMillis();
-        for (int i = 0; i < LOG_ITEMS; i++) {
-            logger.info(() -> LOG_MESSAGE1);
-        }
-        while (logger.isRunning()) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        RESULT.put("JustLog (Old)", System.currentTimeMillis() - start);
     }
 
     private static void justLogNew() {

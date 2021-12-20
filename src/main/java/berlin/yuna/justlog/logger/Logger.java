@@ -1,25 +1,16 @@
 package berlin.yuna.justlog.logger;
 
-import berlin.yuna.justlog.LogLevel;
+import berlin.yuna.justlog.config.LoggerConfig;
+import berlin.yuna.justlog.config.LoggerConfigLoader;
 import berlin.yuna.justlog.formatter.LogFormatter;
 import berlin.yuna.justlog.formatter.SimpleLogFormatter;
-import berlin.yuna.justlog.provider.ClassNameProvider;
-import berlin.yuna.justlog.provider.DateFormatterProvider;
-import berlin.yuna.justlog.provider.ExceptionProvider;
-import berlin.yuna.justlog.provider.HostnameProvider;
-import berlin.yuna.justlog.provider.LineNumberProvider;
-import berlin.yuna.justlog.provider.LogLevelProvider;
-import berlin.yuna.justlog.provider.LoggerNameProvider;
-import berlin.yuna.justlog.provider.MessageProvider;
-import berlin.yuna.justlog.provider.MethodNameProvider;
-import berlin.yuna.justlog.provider.NewLineProvider;
-import berlin.yuna.justlog.provider.PidProvider;
-import berlin.yuna.justlog.provider.Provider;
+import berlin.yuna.justlog.model.LogLevel;
 import berlin.yuna.justlog.writer.LogWriter;
 import berlin.yuna.justlog.writer.SimpleWriter;
 
-import java.util.HashMap;
-import java.util.List;
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -28,15 +19,17 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ForkJoinPool;
 import java.util.function.Supplier;
 
-public abstract class Logger {
+public abstract class Logger implements Serializable {
 
-    protected final String name;
+    @Serial
+    private static final long serialVersionUID = 5540955522657213035L;
     protected LogWriter writer;
     protected LogFormatter formatter;
-    protected LogLevel level = LogLevel.INFO;
-    protected static ForkJoinPool executor = null;
-    protected static List<Provider> providers;
-
+    protected LogLevel level;
+    protected final String name;
+    protected final LoggerConfig config;
+    //TODO: configurable
+    protected static ForkJoinPool executor;
     private static final Set<Logger> registry = ConcurrentHashMap.newKeySet();
 
     protected Logger() {
@@ -49,15 +42,14 @@ public abstract class Logger {
 
     protected Logger(final String name) {
         this.name = name;
-
+        this.config = new LoggerConfig(this);
+        init();
     }
 
-    public Logger initDefaults() {
-        if (formatter == null || writer == null) {
-            formatter(new SimpleLogFormatter().config(new HashMap<>()).pattern("[%l{l=5}] [%d{p=HH:mm:ss}] [%c{l=10}] %m%n%e"));
-            writer(new SimpleWriter().config(new HashMap<>()));
-        }
-        return this;
+    public Logger init() {
+        formatter(new SimpleLogFormatter());
+        writer(new SimpleWriter());
+        return updateConfig();
     }
 
     public String name() {
@@ -78,7 +70,7 @@ public abstract class Logger {
     }
 
     public Logger formatter(final LogFormatter logFormatter) {
-        this.formatter = logFormatter.logger(this).config(new HashMap<>());
+        this.formatter = logFormatter.logger(this).config(config);
         return this;
     }
 
@@ -87,9 +79,29 @@ public abstract class Logger {
     }
 
     public Logger writer(final LogWriter writer) {
-        writer.logger(this);
-        this.writer = writer;
+        this.writer = writer.logger(this).config(config);
         return this;
+    }
+
+    public Logger config(final Map<String, String> config) {
+        this.config.configLoader().putAll(config);
+        return updateConfig();
+    }
+
+    public Logger updateConfig() {
+        if (writer != null) {
+            writer.config(config);
+        }
+        if (formatter != null) {
+            formatter.config(config);
+            formatter.pattern(config.getFormatterValue("pattern", formatter.getClass()).orElse("[%l{l=5}] [%d{p=HH:mm:ss}] [%c{l=10}] %m%n%e"));
+        }
+        this.level = config.getValue("level").filter(l -> !l.isBlank()).map(String::toUpperCase).map(LogLevel::valueOf).orElse(LogLevel.INFO);
+        return this;
+    }
+
+    public LoggerConfigLoader configLoader() {
+        return this.config.configLoader();
     }
 
     public void trace(final Supplier<String> msg) {
@@ -143,11 +155,10 @@ public abstract class Logger {
     //TODO: writer
     public void log(final LogLevel level, final Supplier<String> msg, final Throwable throwable) {
         if (this.level.ordinal() >= level.ordinal()) {
-//            executor.submit(() -> writer(level.ordinal() > 5, formatter.format(level, msg.get(), throwable)));
             if (level.ordinal() > 5) {
-                writer.logOut(formatter.format(level, msg.get(), throwable));
+                writer.logOut(() -> formatter.format(level, msg.get(), throwable));
             } else {
-                writer.logError(formatter.format(level, msg.get(), throwable));
+                writer.logError(() -> formatter.format(level, msg.get(), throwable));
             }
         }
     }
@@ -208,25 +219,6 @@ public abstract class Logger {
             executor = new ForkJoinPool(Runtime.getRuntime().availableProcessors());
         }
         return executor;
-    }
-
-    public static List<Provider> getDefaultProvider() {
-        if (providers == null) {
-            providers = List.of(
-                    new LoggerNameProvider(),
-                    new DateFormatterProvider(),
-                    new ExceptionProvider(),
-                    new LogLevelProvider(),
-                    new MessageProvider(),
-                    new NewLineProvider(),
-                    new PidProvider(),
-                    new HostnameProvider(),
-                    new LineNumberProvider(),
-                    new ClassNameProvider(),
-                    new MethodNameProvider()
-            );
-        }
-        return providers;
     }
 
     private static Logger addNoCheck(final Logger logger) {

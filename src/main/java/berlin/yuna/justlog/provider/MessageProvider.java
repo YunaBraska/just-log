@@ -1,6 +1,7 @@
 package berlin.yuna.justlog.provider;
 
 import berlin.yuna.justlog.logger.Logger;
+import berlin.yuna.justlog.model.LogLevel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +10,8 @@ import java.util.function.Supplier;
 public class MessageProvider extends Provider {
 
     public MessageProvider() {
-        this.name = 'm';
+        this.id = 'm';
+        this.name = "message";
     }
 
     @Override
@@ -19,6 +21,7 @@ public class MessageProvider extends Provider {
 
     @Override
     public String execute(
+            final Supplier<LogLevel> level,
             final Supplier<String> message,
             final Supplier<Throwable> throwable,
             final Supplier<HashMap<String, String>> params

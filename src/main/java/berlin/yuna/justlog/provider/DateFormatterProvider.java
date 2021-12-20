@@ -1,6 +1,7 @@
 package berlin.yuna.justlog.provider;
 
 import berlin.yuna.justlog.logger.Logger;
+import berlin.yuna.justlog.model.LogLevel;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -16,7 +17,8 @@ public class DateFormatterProvider extends Provider {
     private DateTimeFormatter dateTimeFormatter;
 
     public DateFormatterProvider() {
-        this.name = 'd';
+        this.id = 'd';
+        this.name = "date";
     }
 
     @Override
@@ -29,6 +31,7 @@ public class DateFormatterProvider extends Provider {
 
     @Override
     public String execute(
+            final Supplier<LogLevel> level,
             final Supplier<String> message,
             final Supplier<Throwable> throwable,
             final Supplier<HashMap<String, String>> params

@@ -1,26 +1,31 @@
 package berlin.yuna.justlog.writer;
 
+import berlin.yuna.justlog.config.LoggerConfig;
+import berlin.yuna.justlog.formatter.LogFormatter;
 import berlin.yuna.justlog.logger.Logger;
 
 import java.io.BufferedWriter;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Serial;
+import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.Executor;
+import java.util.function.Supplier;
 
 //FIXME: improvements: https://github.com/LMAX-Exchange/disruptor
-public class SimpleWriter extends LogWriter {
+public class SimpleWriter extends LogWriter implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -5437769891469935281L;
     private BufferedWriter out;
     private BufferedWriter err;
     private Charset encoding;
     private int bufferSize;
     private final Executor executor;
-
 
     public SimpleWriter() {
         executor = Logger.getExecutor();
@@ -30,25 +35,38 @@ public class SimpleWriter extends LogWriter {
         }));
     }
 
+    /**
+     * Possible configurations e.g. Encoding, TimeZone, BufferSize, etc.
+     * @param config this will usually be set by the logger see {@link Logger#formatter(LogFormatter)} and {@link Logger#writer(LogWriter)} (LogFormatter)}
+     * @return self
+     */
     @Override
-    public LogWriter config(final Map<String, String> config) {
-        encoding = Optional.ofNullable(config.get("encoding")).map(Charset::forName).orElse(StandardCharsets.US_ASCII);
-        bufferSize = Optional.ofNullable(config.get("buffer-size")).map(Integer::valueOf).filter(i -> i > 0).orElse(100);
+    public LogWriter config(final LoggerConfig config) {
+        encoding = config.getWriterValue("encoding", this.getClass()).map(Charset::forName).orElse(StandardCharsets.US_ASCII);
+        bufferSize = config.getWriterValue("buffer-size", this.getClass()).map(Integer::valueOf).filter(i -> i > 0).orElse(100);
         out = createBufferedWriter(false);
         err = createBufferedWriter(true);
         return this;
     }
 
     @Override
-    public LogWriter logOut(final String msg) {
-        executor.execute(() -> LogOutImpl(msg));
+    public LogWriter logOut(final Supplier<String> msg) {
+        executor.execute(() -> LogOutImpl(msg.get()));
         return this;
     }
 
     @Override
-    public LogWriter logError(final String msg) {
-        executor.execute(() -> LogErrImpl(msg));
+    public LogWriter logError(final Supplier<String> msg) {
+        executor.execute(() -> LogErrImpl(msg.get()));
         return this;
+    }
+
+    public Charset encoding() {
+        return encoding;
+    }
+
+    public int bufferSize() {
+        return bufferSize;
     }
 
     private void LogOutImpl(final String msg) {

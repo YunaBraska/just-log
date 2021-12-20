@@ -1,6 +1,7 @@
 package berlin.yuna.justlog.provider;
 
 import berlin.yuna.justlog.logger.Logger;
+import berlin.yuna.justlog.model.LogLevel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +15,8 @@ public class LineNumberProvider extends Provider {
     private int traceIndex;
 
     public LineNumberProvider() {
-        this.name = 'L';
+        this.id = 'L';
+        this.name = "lineNumber";
     }
 
     @Override
@@ -26,6 +28,7 @@ public class LineNumberProvider extends Provider {
 
     @Override
     public String execute(
+            final Supplier<LogLevel> level,
             final Supplier<String> message,
             final Supplier<Throwable> throwable,
             final Supplier<HashMap<String, String>> params

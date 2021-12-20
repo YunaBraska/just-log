@@ -1,6 +1,7 @@
 package berlin.yuna.justlog.provider;
 
 import berlin.yuna.justlog.logger.Logger;
+import berlin.yuna.justlog.model.LogLevel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +12,8 @@ public class PidProvider extends Provider {
     private int length;
 
     public PidProvider() {
-        this.name = 'p';
+        this.id = 'p';
+        this.name = "pid";
     }
 
     @Override
@@ -22,6 +24,7 @@ public class PidProvider extends Provider {
 
     @Override
     public String execute(
+            final Supplier<LogLevel> level,
             final Supplier<String> message,
             final Supplier<Throwable> throwable,
             final Supplier<HashMap<String, String>> params

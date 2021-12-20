@@ -1,4 +1,4 @@
-package berlin.yuna.justlog;
+package berlin.yuna.justlog.model;
 
 public enum LogLevel {
 

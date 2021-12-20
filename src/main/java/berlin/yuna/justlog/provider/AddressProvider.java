@@ -1,6 +1,7 @@
 package berlin.yuna.justlog.provider;
 
 import berlin.yuna.justlog.logger.Logger;
+import berlin.yuna.justlog.model.LogLevel;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -14,7 +15,8 @@ public class AddressProvider extends Provider {
     private String address;
 
     public AddressProvider() {
-        this.name = 'a';
+        this.id = 'a';
+        this.name = "address";
     }
 
     @Override
@@ -26,6 +28,7 @@ public class AddressProvider extends Provider {
 
     @Override
     public String execute(
+            final Supplier<LogLevel> level,
             final Supplier<String> message,
             final Supplier<Throwable> throwable,
             final Supplier<HashMap<String, String>> params

@@ -1,11 +1,13 @@
 package berlin.yuna.justlog.provider;
 
 import berlin.yuna.justlog.logger.Logger;
+import berlin.yuna.justlog.model.LogLevel;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -18,7 +20,8 @@ public abstract class Provider {
     public static final char PH_PARAM_INDEX = 'i';
     public static final char PH_PARAM_ZONE_ID = 'z';
 
-    protected char name = NULL;
+    protected char id = NULL;
+    protected String name = null;
 
     protected Provider() {
     }
@@ -26,6 +29,7 @@ public abstract class Provider {
     public abstract Provider compile(final Logger logger, final Map<Character, String> config);
 
     public abstract String execute(
+            final Supplier<LogLevel> level,
             final Supplier<String> message,
             final Supplier<Throwable> throwable,
             final Supplier<HashMap<String, String>> params
@@ -37,8 +41,13 @@ public abstract class Provider {
         return config.entrySet().stream().filter(e -> e.getKey() == name).map(Map.Entry::getValue).findFirst();
     }
 
-    public char name() {
-        if (name == NULL) throw new NullPointerException("Name may not be null");
+    public char id() {
+        if (id == NULL) throw new NullPointerException("Provider [id] may not be [null]");
+        return id;
+    }
+
+    public String name() {
+        if (name == null) throw new NullPointerException("Provider [name] may not be [null]");
         return name;
     }
 
@@ -78,6 +87,13 @@ public abstract class Provider {
         return result.isEmpty() ? text : result.append(text.substring(indexPrev + 1)).toString();
     }
 
+    /**
+     * Trims or adds length to a string
+     *
+     * @param text   input string
+     * @param length resize length
+     * @return manipulated string
+     */
     protected String spaceUp(final String text, final int length) {
         if (length > 0 && text.length() < length) {
             final String spacePattern = "%-" + length + "s";
@@ -86,7 +102,13 @@ public abstract class Provider {
         return text;
     }
 
-    protected String stringOf(final Throwable t) {
+    /**
+     * Prints a Throwable to string
+     *
+     * @param t input
+     * @return throwable as string;
+     */
+    public static String stringOf(final Throwable t) {
         final StringWriter sw = new StringWriter();
         final PrintWriter pw = new PrintWriter(sw);
         t.printStackTrace(pw);
@@ -94,9 +116,22 @@ public abstract class Provider {
     }
 
     @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Provider provider = (Provider) o;
+        return id == provider.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
     public String toString() {
         return "Provider{" +
-                "name=" + name +
+                "name=" + id +
                 '}';
     }
 }
