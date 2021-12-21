@@ -59,17 +59,17 @@ public class SimpleLogFormatter extends LogFormatter {
     public String formatJson(final LogLevel level, final String msg, final Throwable t) {
         final JsonObjectBuilder builder = Json.createObjectBuilder();
         if (patternCompiled.isEmpty()) {
-            builder.add("message", msg == null ? "null" : msg);
-            Optional.ofNullable(t).ifPresent(ex -> builder.add("exception", stringOf(ex)));
+            builder.add("message", msg == null ? "null" : escapeLineBreaks(msg));
+            Optional.ofNullable(t).ifPresent(ex -> builder.add("exception", escapeLineBreaks(stringOf(ex))));
         } else {
             patternCompiled.forEach(e -> {
                 if (e.getValue().name() != null) {
-                    builder.add(e.getValue().name(), e.getValue().execute(
+                    builder.add(e.getValue().name(), escapeLineBreaks(e.getValue().execute(
                             () -> level,
                             () -> msg,
                             () -> t,
                             HashMap::new
-                    ));
+                    )));
                 }
             });
         }
@@ -111,4 +111,9 @@ public class SimpleLogFormatter extends LogFormatter {
         }
     }
 
+    private String escapeLineBreaks(final String input) {
+        return input.replace("\t", "\\t")
+                .replace("\r", "\\r")
+                .replace("\n", "\\n");
+    }
 }

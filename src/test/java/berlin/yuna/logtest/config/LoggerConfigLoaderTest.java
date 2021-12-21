@@ -1,8 +1,9 @@
-package berlin.yuna.justlog.config;
+package berlin.yuna.logtest.config;
 
+import berlin.yuna.logtest.LoggerTestBase;
+import berlin.yuna.justlog.config.LoggerConfigLoader;
 import berlin.yuna.justlog.model.LogLevel;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
@@ -17,18 +18,13 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-class LoggerConfigLoaderTest {
+class LoggerConfigLoaderTest extends LoggerTestBase {
 
     private static Path configFilePath;
 
     @BeforeAll
     static void beforeAll() throws URISyntaxException {
         configFilePath = Path.of(LoggerConfigLoaderTest.class.getClassLoader().getResource("customLogger.properties").toURI());
-    }
-
-    @BeforeEach
-    void setUp() {
-        LoggerConfigLoader.instance().clear();
     }
 
     @Test

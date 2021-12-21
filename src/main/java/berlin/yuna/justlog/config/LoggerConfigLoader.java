@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Stream;
@@ -48,10 +49,8 @@ public class LoggerConfigLoader extends HashMap<String, String> implements Seria
     public Optional<String> get(final String key, final String prefixName, final String prefixClassName, final String prefixSubName) {
         final String sub = isEmpty(prefixSubName) ? "" : prefixSubName.toLowerCase() + ".";
         final String lowerCaseKey = key.toLowerCase();
-        final String className = isEmpty(prefixClassName) ? "" : prefixClassName.toLowerCase() + ".";
-        final String loggerName = isEmpty(prefixName) ? className : prefixName.toLowerCase() + ".";
-        return Optional.ofNullable(this.get(loggerName + "." + sub + "." + lowerCaseKey))
-                .or(() -> Optional.ofNullable(this.get(loggerName + sub + lowerCaseKey)))
+        return Optional.ofNullable(this.get((isEmpty(prefixName) ? "#" : prefixName.toLowerCase() + ".") + sub + lowerCaseKey))
+                .or(() -> Optional.ofNullable(this.get((isEmpty(prefixClassName) ? "#" : prefixClassName.toLowerCase() + ".") + sub + lowerCaseKey)))
                 .or(() -> Optional.ofNullable(this.get("root." + sub + lowerCaseKey)))
                 .or(() -> Optional.ofNullable(this.get(sub + lowerCaseKey)))
                 .or(() -> Optional.ofNullable(this.get(lowerCaseKey)));
@@ -99,7 +98,7 @@ public class LoggerConfigLoader extends HashMap<String, String> implements Seria
         try {
             put(Files.newInputStream(path));
         } catch (IOException e) {
-            getLogger(LOGGER_PREFIX + "file").severe("Unable to read property file [" + path.toUri() + "] cause of [" + e.getMessage() + "]");
+            getLogger(LOGGER_PREFIX + "file").severe("Unable to read property file [" + path.toUri() + "] with value [" + e.getMessage() + "]");
         }
     }
 
@@ -130,6 +129,11 @@ public class LoggerConfigLoader extends HashMap<String, String> implements Seria
                 lowerCaseKey.startsWith(LOGGER_PREFIX) ? key.substring(LOGGER_PREFIX.length()) : lowerCaseKey,
                 removeQuotes(value)
         );
+    }
+
+    @Override
+    public void putAll(final Map<? extends String, ? extends String> config) {
+        config.forEach(this::put);
     }
 
     private LoggerConfigLoader() {

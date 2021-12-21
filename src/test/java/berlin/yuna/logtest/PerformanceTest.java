@@ -1,4 +1,4 @@
-package berlin.yuna.justlog;
+package berlin.yuna.logtest;
 
 import berlin.yuna.justlog.formatter.SimpleLogFormatter;
 import berlin.yuna.justlog.logger.DefaultLogger;
@@ -16,7 +16,7 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.logging.Logger;
 
 @Disabled
-class PerformanceTest {
+class PerformanceTest extends LoggerTestBase {
 
     public static int LOG_ITEMS = 1000000;
 

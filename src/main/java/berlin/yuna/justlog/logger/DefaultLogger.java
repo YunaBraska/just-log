@@ -9,15 +9,15 @@ public class DefaultLogger extends Logger implements Serializable {
     private static final long serialVersionUID = 6087053848055106765L;
 
     public static Logger instance() {
-        return add(new DefaultLogger(getCaller().getClassName())).init();
+        return add(new DefaultLogger(getCaller().getClassName()));
     }
 
     public static Logger instance(final String name) {
-        return add(new DefaultLogger(name)).init();
+        return add(new DefaultLogger(name));
     }
 
     public static Logger instance(final Class<?> clazz) {
-        return add(new DefaultLogger(clazz)).init();
+        return add(new DefaultLogger(clazz));
     }
 
     public DefaultLogger(final String name) {

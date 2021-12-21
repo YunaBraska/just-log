@@ -11,7 +11,7 @@ public class NewLineProvider extends Provider {
 
     public NewLineProvider() {
         this.id = 'n';
-        this.name = "";
+        this.name = null;
     }
 
     @Override
@@ -32,5 +32,10 @@ public class NewLineProvider extends Provider {
     @Override
     public Provider refresh(final Supplier<Logger> logger) {
         return this;
+    }
+
+    @Override
+    public String name() {
+        return name;
     }
 }

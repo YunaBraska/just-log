@@ -22,7 +22,7 @@ public class ClassNameProvider extends Provider {
     @Override
     public Provider compile(final Logger logger, final Map<Character, String> config) {
         this.length = getLength(config);
-        this.traceIndex = getIndex(config) == -1 ? 0 : getIndex(config);
+        this.traceIndex = getIndex(config) < 0 ? 0 : getIndex(config);
         return this;
     }
 
@@ -33,7 +33,7 @@ public class ClassNameProvider extends Provider {
             final Supplier<Throwable> throwable,
             final Supplier<HashMap<String, String>> params
     ) {
-        return spaceUp(getCaller(traceIndex).getMethodName(), length);
+        return spaceUp(shortenPackage(getCaller(traceIndex).getClassName(), length), length);
     }
 
 

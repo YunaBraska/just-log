@@ -1,4 +1,4 @@
-package berlin.yuna.justlog;
+package berlin.yuna.logtest;
 
 import berlin.yuna.justlog.config.LoggerConfig;
 import berlin.yuna.justlog.logger.Logger;
@@ -8,7 +8,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-class CoverageTest {
+class CoverageTest extends LoggerTestBase {
 
     @Test
     void equals_hashCode_toString() {

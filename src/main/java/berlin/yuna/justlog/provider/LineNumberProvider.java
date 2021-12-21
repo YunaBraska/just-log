@@ -22,7 +22,7 @@ public class LineNumberProvider extends Provider {
     @Override
     public Provider compile(final Logger logger, final Map<Character, String> config) {
         this.length = getLength(config);
-        this.traceIndex = getIndex(config) == -1 ? 0 : getIndex(config);
+        this.traceIndex = getIndex(config) < 0 ? 0 : getIndex(config);
         return this;
     }
 

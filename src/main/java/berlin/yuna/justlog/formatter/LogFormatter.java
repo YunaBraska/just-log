@@ -115,6 +115,13 @@ public abstract class LogFormatter implements Serializable {
     }
 
     /**
+     * @return compiled pattern
+     */
+    public List<Map.Entry<String, Provider>> patternCompiled() {
+        return new ArrayList<>(patternCompiled);
+    }
+
+    /**
      * Gets and configures a provider
      *
      * @param providerId provider id

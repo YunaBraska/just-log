@@ -131,7 +131,8 @@ public abstract class Provider {
     @Override
     public String toString() {
         return "Provider{" +
-                "name=" + id +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 '}';
     }
 }
