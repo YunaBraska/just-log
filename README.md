@@ -20,8 +20,6 @@ public class UsageTest {
 
     private static final Logger logger = Logger.defaultLogger();
 
-    instance();
-
     public void log() {
         logger.warn(() -> "message", () -> new RuntimeException("exception"));
     }
