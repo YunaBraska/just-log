@@ -9,6 +9,13 @@
 * Logger without huge dependency tree
 * Logger simple to use (Always hard to find out how to set up SLF4J - afterwards it's awesome)
 
+### Function
+
+[Config](https://github.com/YunaBraska/just-log/tree/main/src/main/java/berlin/yuna/justlog/config)
+-> [Logger](https://github.com/YunaBraska/just-log/tree/main/src/main/java/berlin/yuna/justlog/logger) ([LogLevel](https://github.com/YunaBraska/just-log/blob/main/src/main/java/berlin/yuna/justlog/model/LogLevel.java))
+-> [Formatter](https://github.com/YunaBraska/just-log/tree/main/src/main/java/berlin/yuna/justlog/formatter) ([LogLevel](https://github.com/YunaBraska/just-log/tree/main/src/main/java/berlin/yuna/justlog/provider))
+-> [Writer](https://github.com/YunaBraska/just-log/tree/main/src/main/java/berlin/yuna/justlog/writer)
+
 ### Usage
 
 * Default
@@ -29,7 +36,6 @@ public class UsageTest {
 ### Configuration
 
 * Available [LogLevel](https://github.com/YunaBraska/just-log/blob/main/src/main/java/berlin/yuna/justlog/model/LogLevel.java)
-* Available [ConfigLoader](https://github.com/YunaBraska/just-log/blob/main/src/main/java/berlin/yuna/justlog/config/LoggerConfigLoader.java)
 * Configuration priorities **\[Environment Variables, Config Files, DSL\]**
 * Configuration folders **\[classpath:resource, userDir, userDir:config\]**
 * Configuration files **\[application.properties, logger.properties\]**
