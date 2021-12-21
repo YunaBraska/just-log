@@ -30,10 +30,8 @@ public class UsageTest {
 
 ### Configuration
 
-*
-Available [LogLevel](https://github.com/YunaBraska/just-log/blob/main/src/main/java/berlin/yuna/justlog/model/LogLevel.java)
-*
-Available [ConfigLoader](https://github.com/YunaBraska/just-log/blob/main/src/main/java/berlin/yuna/justlog/config/LoggerConfigLoader.java)
+* Available [LogLevel](https://github.com/YunaBraska/just-log/blob/main/src/main/java/berlin/yuna/justlog/model/LogLevel.java)
+* Available [ConfigLoader](https://github.com/YunaBraska/just-log/blob/main/src/main/java/berlin/yuna/justlog/config/LoggerConfigLoader.java)
 * Configuration priorities **\[Environment Variables, Config Files, DSL\]**
 * Configuration folders **\[classpath:resource, userDir, userDir:config\]**
 * Configuration files **\[application.properties, logger.properties\]**
@@ -115,6 +113,9 @@ public class UsageTest {
 
 ### TODOs
 
-* [ ] Split into Java version 8,11,17
+* [ ] Test the logger in a project
 * [ ] String format message
 * [ ] Config to enable automatically Json / Line logging
+* [ ] FileWriter
+* [ ] Accept Multiple Writer
+* [ ] Split into Java version 8,11,17
