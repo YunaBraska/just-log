@@ -4,6 +4,9 @@ package berlin.yuna.logtest.logger;
 import berlin.yuna.logtest.LoggerTestBase;
 import berlin.yuna.justlog.logger.DefaultLogger;
 import berlin.yuna.justlog.logger.Logger;
+import berlin.yuna.logtest.util.SystemStreamCollector;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -12,9 +15,11 @@ import static berlin.yuna.justlog.model.LogLevel.FATAL;
 import static berlin.yuna.justlog.model.LogLevel.INFO;
 import static berlin.yuna.justlog.model.LogLevel.OFF;
 import static berlin.yuna.justlog.model.LogLevel.WARN;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNot.not;
 
 class DefaultLoggerTest extends LoggerTestBase {
 
@@ -38,6 +43,15 @@ class DefaultLoggerTest extends LoggerTestBase {
         logger.error(() -> "ErrorMessage");
         logger.fatal(() -> "FatalMessage");
         waitForLog();
+
+        final String output = streamCollector.consumeStandardOutput();
+        final String error = streamCollector.consumeErrorOutput();
+        assertThat(output, not(containsString("TraceMessage")));
+        assertThat(output, not(containsString("DebugMessage")));
+        assertThat(output, not(containsString("InfoMessage")));
+        assertThat(output, not(containsString("WarnMessage")));
+        assertThat(error, not(containsString("ErrorMessage")));
+        assertThat(error, not(containsString("FatalMessage")));
     }
 
     @Test
@@ -56,6 +70,15 @@ class DefaultLoggerTest extends LoggerTestBase {
         logger.fatal(() -> "FatalMessage");
         logger.fatal(() -> "FatalMessage", () -> new RuntimeException("TestException"));
         waitForLog();
+
+        final String output = streamCollector.consumeStandardOutput();
+        final String error = streamCollector.consumeErrorOutput();
+        assertThat(output, containsString("TraceMessage"));
+        assertThat(output, containsString("DebugMessage"));
+        assertThat(output, containsString("InfoMessage"));
+        assertThat(output, containsString("WarnMessage"));
+        assertThat(error, containsString("ErrorMessage"));
+        assertThat(error, containsString("FatalMessage"));
     }
 
     @Test
