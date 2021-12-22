@@ -22,7 +22,7 @@ jobs:
       - name: Maven compile and update dependencies
         run: |
           ./mvnw -B -N io.takari:maven:wrapper
-          ./mvnw -B -q versions:update-properties -DgenerateBackupPoms=false
+          ./mvnw -B -q versions:update-properties -DgenerateBackupPoms=false  -Dmaven.version.rules=".mvn/version-rules.xml"
           ./mvnw -B -q clean verify -Dmaven.test.skip=true
       - name: Run tests
         run: ./mvnw -B clean verify
