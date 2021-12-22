@@ -4,7 +4,6 @@ import berlin.yuna.justlog.config.LoggerConfig;
 import berlin.yuna.justlog.formatter.LogFormatter;
 import berlin.yuna.justlog.logger.Logger;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.concurrent.Executor;
 import java.util.function.Supplier;
@@ -12,7 +11,6 @@ import java.util.function.Supplier;
 //FIXME: improvements: https://github.com/LMAX-Exchange/disruptor
 public class SimpleWriter extends LogWriter implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = -5437769891469935281L;
     private final Executor executor;
 

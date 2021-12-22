@@ -2,7 +2,6 @@ package berlin.yuna.justlog.config;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serial;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,7 +16,6 @@ import static java.util.logging.Logger.getLogger;
 public class LoggerConfigLoader extends HashMap<String, String> implements Serializable {
 
     public static final String LOGGER_PREFIX = "logger.";
-    @Serial
     private static final long serialVersionUID = -6613899829390043425L;
     private static LoggerConfigLoader loader = null;
 

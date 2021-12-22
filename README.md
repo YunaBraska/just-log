@@ -1,4 +1,43 @@
 # Just Logger
+Simple Java only logger without reflection or other magic
+
+[![Build][build_shield]][build_link]
+[![Maintainable][maintainable_shield]][maintainable_link]
+[![Coverage][coverage_shield]][coverage_link]
+[![Issues][issues_shield]][issues_link]
+[![Commit][commit_shield]][commit_link]
+[![Dependencies][dependency_shield]][dependency_link]
+[![License][license_shield]][license_link]
+[![Central][central_shield]][central_link]
+[![Tag][tag_shield]][tag_link]
+[![Javadoc][javadoc_shield]][javadoc_link]
+[![Size][size_shield]][size_shield]
+![Label][label_shield]
+
+[build_shield]: https://github.com/YunaBraska/just-log/workflows/JAVA_CI/badge.svg
+[build_link]: https://github.com/YunaBraska/just-log/actions?query=workflow%3AJAVA_CI
+[maintainable_shield]: https://img.shields.io/codeclimate/maintainability/YunaBraska/just-log?style=flat-square
+[maintainable_link]: https://codeclimate.com/github/YunaBraska/just-log/maintainability
+[coverage_shield]: https://img.shields.io/codeclimate/coverage/YunaBraska/just-log?style=flat-square
+[coverage_link]: https://codeclimate.com/github/YunaBraska/just-log/test_coverage
+[issues_shield]: https://img.shields.io/github/issues/YunaBraska/just-log?style=flat-square
+[issues_link]: https://github.com/YunaBraska/just-log/commits/main
+[commit_shield]: https://img.shields.io/github/last-commit/YunaBraska/just-log?style=flat-square
+[commit_link]: https://github.com/YunaBraska/just-log/issues
+[license_shield]: https://img.shields.io/github/license/YunaBraska/just-log?style=flat-square
+[license_link]: https://github.com/YunaBraska/just-log/blob/main/LICENSE
+[dependency_shield]: https://img.shields.io/librariesio/github/YunaBraska/just-log?style=flat-square
+[dependency_link]: https://libraries.io/github/YunaBraska/just-log
+[central_shield]: https://img.shields.io/maven-central/v/berlin.yuna/just-log?style=flat-square
+[central_link]:https://search.maven.org/artifact/berlin.yuna/just-log
+[tag_shield]: https://img.shields.io/github/v/tag/YunaBraska/just-log?style=flat-square
+[tag_link]: https://github.com/YunaBraska/just-log/releases
+[javadoc_shield]: https://javadoc.io/badge2/berlin.yuna/just-log/javadoc.svg?style=flat-square
+[javadoc_link]: https://javadoc.io/doc/berlin.yuna/just-log
+[size_shield]: https://img.shields.io/github/repo-size/YunaBraska/just-log?style=flat-square
+[label_shield]: https://img.shields.io/badge/Yuna-QueenInside-blueviolet?style=flat-square
+[gitter_shield]: https://img.shields.io/gitter/room/YunaBraska/just-log?style=flat-square
+[gitter_link]: https://gitter.im/just-log/Lobby
 
 ### Motivation
 
@@ -123,3 +162,5 @@ public class UsageTest {
 * [ ] FileWriter
 * [ ] Accept Multiple Writer
 * [ ] Split into Java version 8,11,17
+
+![logo](src/test/resources/logo.png)

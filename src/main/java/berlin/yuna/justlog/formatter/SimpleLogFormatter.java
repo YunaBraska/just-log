@@ -8,7 +8,6 @@ import berlin.yuna.justlog.writer.LogWriter;
 import jakarta.json.Json;
 import jakarta.json.JsonObjectBuilder;
 
-import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -19,7 +18,6 @@ import static berlin.yuna.justlog.provider.Provider.stringOf;
 @SuppressWarnings("java:S1948")
 public class SimpleLogFormatter extends LogFormatter {
 
-    @Serial
     private static final long serialVersionUID = -7393578204904822373L;
     private int lastTraceId = 0;
 

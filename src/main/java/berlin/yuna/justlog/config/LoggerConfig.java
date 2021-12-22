@@ -2,14 +2,12 @@ package berlin.yuna.justlog.config;
 
 import berlin.yuna.justlog.logger.Logger;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
 public class LoggerConfig implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = -1487335095352984842L;
     private final Logger logger;
     private final LoggerConfigLoader config;

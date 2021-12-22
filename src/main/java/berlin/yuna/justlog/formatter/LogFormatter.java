@@ -19,7 +19,6 @@ import berlin.yuna.justlog.provider.PidProvider;
 import berlin.yuna.justlog.provider.Provider;
 import berlin.yuna.justlog.writer.LogWriter;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +31,6 @@ import static java.lang.Character.isAlphabetic;
 
 public abstract class LogFormatter implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = -7998184842762871108L;
     protected Logger logger;
     protected final List<Map.Entry<String, Provider>> patternCompiled = new ArrayList<>();

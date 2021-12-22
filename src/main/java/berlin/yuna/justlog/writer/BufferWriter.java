@@ -8,7 +8,6 @@ import java.io.BufferedWriter;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-import java.io.Serial;
 import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -19,7 +18,6 @@ import java.util.function.Supplier;
 //FIXME: improvements: https://github.com/LMAX-Exchange/disruptor
 public class BufferWriter extends LogWriter implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = -5437769891469935281L;
     private BufferedWriter out;
     private BufferedWriter err;

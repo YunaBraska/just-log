@@ -4,13 +4,11 @@ import berlin.yuna.justlog.config.LoggerConfig;
 import berlin.yuna.justlog.formatter.LogFormatter;
 import berlin.yuna.justlog.logger.Logger;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.function.Supplier;
 
 public abstract class LogWriter implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = -352735044828046466L;
     protected Logger logger;
 

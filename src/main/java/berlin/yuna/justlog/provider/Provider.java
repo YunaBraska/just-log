@@ -84,7 +84,7 @@ public abstract class Provider {
             indexPrev = index;
             index = text.indexOf('.', index + 1);
         }
-        return result.isEmpty() ? text : result.append(text.substring(indexPrev + 1)).toString();
+        return result.length() == 0 ? text : result.append(text.substring(indexPrev + 1)).toString();
     }
 
     /**

@@ -7,6 +7,7 @@ import berlin.yuna.justlog.logger.Logger;
 import berlin.yuna.logtest.util.SystemStreamCollector;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -21,6 +22,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 
+@Tag("UnitTest")
 class DefaultLoggerTest extends LoggerTestBase {
 
     @Test

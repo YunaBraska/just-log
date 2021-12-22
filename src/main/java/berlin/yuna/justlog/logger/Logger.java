@@ -9,7 +9,6 @@ import berlin.yuna.justlog.provider.Provider;
 import berlin.yuna.justlog.writer.LogWriter;
 import berlin.yuna.justlog.writer.SimpleWriter;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Map;
@@ -24,8 +23,7 @@ import java.util.stream.Stream;
 
 public abstract class Logger implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 5540955522657213035L;
+    private static final long serialVersionUID = 7189231956735141531L;
     protected LogWriter writer;
     protected LogFormatter formatter;
     protected LogLevel level;
@@ -34,7 +32,7 @@ public abstract class Logger implements Serializable {
     //TODO: configurable
     protected static ForkJoinPool executor;
     private static final Set<Logger> registry = ConcurrentHashMap.newKeySet();
-    private static final Set<String> ignoreTraces = Set.of("org.junit.", "com.intellij.", Logger.class.getCanonicalName(), LogWriter.class.getPackageName(), LogFormatter.class.getPackageName(), Provider.class.getPackageName());
+    private static final Set<String> ignoreTraces = Set.of("org.junit.", "com.intellij.", "org.apache.maven", Logger.class.getCanonicalName(), LogWriter.class.getPackageName(), LogFormatter.class.getPackageName(), Provider.class.getPackageName());
 
     protected Logger(final Class<?> clazz) {
         this(clazz.getCanonicalName());
@@ -246,10 +244,11 @@ public abstract class Logger implements Serializable {
      */
     public void log(final LogLevel level, final Supplier<String> msg, final Supplier<Throwable> throwable) {
         if (this.level.ordinal() >= level.ordinal()) {
+            final Supplier<String> formatter = () -> this.formatter.format(level, msg == null ? null : msg.get(), throwable == null ? null : throwable.get());
             if (level.ordinal() < 5) {
-                writer.logOut(() -> formatter.format(level, msg == null ? null : msg.get(), throwable == null ? null : throwable.get()));
+                writer.logOut(formatter);
             } else {
-                writer.logError(() -> formatter.format(level, msg == null ? null : msg.get(), throwable == null ? null : throwable.get()));
+                writer.logError(formatter);
             }
         }
     }

@@ -1,11 +1,9 @@
 package berlin.yuna.justlog.logger;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 public class DefaultLogger extends Logger implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = 6087053848055106765L;
 
     public static Logger instance() {
