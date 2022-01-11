@@ -6,7 +6,7 @@
 
     <groupId>berlin.yuna</groupId>
     <artifactId>just-log</artifactId>
-    <version>0.1-0</version>
+    <version>0.1-1</version>
 
     <name>just-log</name>
     <description>Simple java logger
