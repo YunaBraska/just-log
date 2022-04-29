@@ -2,9 +2,9 @@
 name: JAVA_CI_DEPLOY
 on:
   workflow_dispatch:
-    branches: ['main']
+#    branches: ['main']
   schedule:
-    - cron: "0 7 * * *"
+    - cron: "0 3 * * *"
 
 env:
   SPRING_PROFILE: ci
@@ -22,7 +22,7 @@ jobs:
       - name: Maven compile and update dependencies
         run: |
           ./mvnw -B -N io.takari:maven:wrapper
-          ./mvnw -B -q versions:update-properties -DgenerateBackupPoms=false  -Dmaven.version.rules=".mvn/version-rules.xml"
+          ./mvnw -B -q versions:update-properties -DgenerateBackupPoms=false
           ./mvnw -B -q clean verify -Dmaven.test.skip=true
       - name: Run tests
         run: ./mvnw -B clean verify
