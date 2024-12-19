@@ -6,7 +6,7 @@
 
     <groupId>berlin.yuna</groupId>
     <artifactId>just-log</artifactId>
-    <version>0.1.78</version>
+    <version>0.1.79</version>
 
     <name>just-log</name>
     <description>Simple java logger
@@ -41,7 +41,7 @@
         <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
         <!-- TEST -->
         <hamcrest-core.version>3.0</hamcrest-core.version>
-        <and-wait-matcher.version>1.3.61</and-wait-matcher.version>
+        <and-wait-matcher.version>1.3.62</and-wait-matcher.version>
         <junit-jupiter.version>5.11.4</junit-jupiter.version>
         <log4j-api.version>3.0.0-beta2</log4j-api.version>
         <slf4j-log4j12.version>2.1.0-alpha1</slf4j-log4j12.version>
