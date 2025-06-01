@@ -14,8 +14,8 @@ Simple Java only logger without reflection or other magic
 [![Size][size_shield]][size_shield]
 ![Label][label_shield]
 
-[build_shield]: https://github.com/YunaBraska/just-log/workflows/JAVA_CI/badge.svg
-[build_link]: https://github.com/YunaBraska/just-log/actions?query=workflow%3AJAVA_CI
+[build_shield]: https://github.com/YunaBraska/just-log/workflows/Daily/badge.svg
+[build_link]: https://github.com/YunaBraska/just-log/actions?query=workflow%3ADaily
 [maintainable_shield]: https://img.shields.io/codeclimate/maintainability/YunaBraska/just-log?style=flat-square
 [maintainable_link]: https://codeclimate.com/github/YunaBraska/just-log/maintainability
 [coverage_shield]: https://img.shields.io/codeclimate/coverage/YunaBraska/just-log?style=flat-square
