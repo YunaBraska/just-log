@@ -6,7 +6,7 @@
 
     <groupId>berlin.yuna</groupId>
     <artifactId>just-log</artifactId>
-    <version>2025.07.1860714</version>
+    <version>2025.07.2020724</version>
 
     <name>just-log</name>
     <description>Simple java logger
@@ -45,8 +45,8 @@
         <and-wait-matcher.version>2025.07.1860310</and-wait-matcher.version>
         <log4j-api.version>3.0.0-beta2</log4j-api.version>
         <slf4j-log4j12.version>2.1.0-alpha1</slf4j-log4j12.version>
-        <junit.version>5.13.3</junit.version>
-        <junit-launcher.version>1.13.3</junit-launcher.version>
+        <junit.version>5.13.4</junit.version>
+        <junit-launcher.version>1.13.4</junit-launcher.version>
 
         <!-- BUILD -->
         <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
