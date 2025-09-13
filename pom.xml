@@ -6,7 +6,7 @@
 
     <groupId>berlin.yuna</groupId>
     <artifactId>just-log</artifactId>
-    <version>2025.09.2550714</version>
+    <version>2025.09.2560712</version>
 
     <name>just-log</name>
     <description>Simple java logger
@@ -42,7 +42,7 @@
 
         <!-- TEST -->
         <hamcrest-core.version>3.0</hamcrest-core.version>
-        <and-wait-matcher.version>2025.09.2550251</and-wait-matcher.version>
+        <and-wait-matcher.version>2025.09.2560242</and-wait-matcher.version>
         <log4j-api.version>3.0.0-beta2</log4j-api.version>
         <slf4j-log4j12.version>2.1.0-alpha1</slf4j-log4j12.version>
         <junit.version>5.13.4</junit.version>
@@ -54,7 +54,7 @@
         <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
         <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
-        <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
         <central-publishing-maven-plugin.version>0.7.0</central-publishing-maven-plugin.version>
     </properties>
 
